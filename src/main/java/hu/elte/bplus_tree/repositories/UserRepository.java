@@ -13,6 +13,6 @@ import org.springframework.data.repository.CrudRepository;
  *
  * @author Lilla
  */
-public interface UserRepository extends CrudRepository<User, Long> {
+public interface UserRepository extends CrudRepository<User, Integer> {
     Optional<User> findByUsername(String username);
 }

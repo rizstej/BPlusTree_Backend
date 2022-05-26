@@ -9,11 +9,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.criteria.CriteriaBuilder;
+
 /**
  *
  * @author Lilla
  */
-@CrossOrigin
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
@@ -31,6 +33,16 @@ public class UserController {
         return ResponseEntity.ok(userRepository.findAll());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<User> findById(@PathVariable Integer id) {
+        Optional<User> user = userRepository.findById(id);
+        if (user.isPresent()) {
+            return ResponseEntity.ok(user.get());
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("register")
     public ResponseEntity<User> register(@RequestBody User user) {
         Optional<User> oUser = userRepository.findByUsername(user.getUsername());
@@ -45,5 +57,16 @@ public class UserController {
     @PostMapping("login")
     public ResponseEntity login() {
       return ResponseEntity.ok(authenticatedUser.getUser());
-    } 
+    }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<User> modifyById(@RequestBody User user, @PathVariable Integer id) {
+        Optional<User> oldUser = userRepository.findById(id);
+        if (oldUser.isPresent()) {
+            user.setId(id);
+            return ResponseEntity.ok(userRepository.save(user));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 }

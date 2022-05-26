@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>hu.elte</groupId>
-	<artifactId>split_bill</artifactId>
+	<artifactId>bplus-tree</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>split_bill</name>
+	<name>bplus-tree</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
